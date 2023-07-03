@@ -1,0 +1,16 @@
+# Database settings
+database:
+  # PostgreSQL Database-URL
+  # Format: postgresql://<user>:<password>@<host>/<database>
+  # you can add optional postgres parameters after the database part, e.g. ?sslmode=verify-full
+  url: "postgresql://<user>:<password>@<host>/<database>"
+
+# Mastodon Instance settings
+mastodon:
+  # URL of your Mastodon Instance
+  # Format: https://mastodon.social (without trailing slash)
+  url: "https://"
+
+  # Access token for your mastodon account
+  # see $your_mastodon_url/settings/applications
+  token: ""
