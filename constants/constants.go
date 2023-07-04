@@ -4,6 +4,10 @@
  *
  */
 
-package app
+package constants
+
+var AppVersion = "0.0.1"
 
 var HumbleCategories = []string{"games", "books", "software"}
+
+var UserAgent = "humble-bot/" + AppVersion + " https://codeberg.org/lauralani/humble-bot"

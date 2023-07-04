@@ -7,98 +7,65 @@
 package app
 
 import (
-	"bytes"
+	"codeberg.org/lauralani/humble-bot/constants"
+	"codeberg.org/lauralani/humble-bot/db"
 	"codeberg.org/lauralani/humble-bot/misc"
 	"codeberg.org/lauralani/humble-bot/models"
 	"encoding/json"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
-	"github.com/google/uuid"
-	"github.com/spf13/viper"
+	"github.com/rs/zerolog/log"
 	"io"
-	"log"
-	"net/http"
 	"net/url"
-	"strings"
-	"time"
 )
 
-func UpdateCategory(category string) {
-	response, err := http.Get("https://www.humblebundle.com/" + category)
-	if err != nil {
-		log.Printf("Status: %v, Error: %q\n", response.Status, err)
-	}
-	defer func(Body io.ReadCloser) {
-		err = Body.Close()
+func UpdateBundles() {
+	log.Debug().Str("func", "UpdateBundles").Msg("starting bundle run")
+
+	for _, category := range constants.HumbleCategories {
+		log.Debug().Str("category", category).Msg("starting bundle update")
+		endpoint, _ := url.Parse("https://www.humblebundle.com/" + category)
+
+		client := misc.CustomHttpClient()
+		req := misc.CustomHttpRequest()
+		req.URL = endpoint
+		req.Method = "GET"
+
+		response, err := client.Do(req)
 		if err != nil {
-			log.Printf("Error: %q\n", err)
+			log.Error().Str("category", category).Str("status", response.Status).
+				Str("func", "app.UpdateBundles").Msgf("HTTP Error: %q", err)
 		}
-	}(response.Body)
+		defer func(Body io.ReadCloser) {
+			err = Body.Close()
+			if err != nil {
+				log.Error().Str("func", "app.UpdateBundles").Msg(err.Error())
+			}
+		}(response.Body)
 
-	document, err := goquery.NewDocumentFromReader(response.Body)
-	if err != nil {
-		log.Printf("Error: %q\n", err)
-	}
-
-	document.Find("script#landingPage-json-data").Each(func(idx int, s *goquery.Selection) {
-		node := s.Nodes[0]
-		data := node.FirstChild.Data
-		products, err := parseBundles([]byte(data), category)
+		document, err := goquery.NewDocumentFromReader(response.Body)
 		if err != nil {
-			log.Printf("Error: %q\n", err)
+			log.Error().Str("func", "app.UpdateBundles").Msg(err.Error())
 		}
 
-		for _, product := range products {
-			builder := new(strings.Builder)
-
-			builder.WriteString(product.TileName)
-			builder.WriteString("\n\n")
-
-			builder.WriteString(misc.Sanitize(product.MarketingBlurb))
-			builder.WriteString("\n\n")
-
-			builder.WriteString("https://www.humblebundle.com")
-			builder.WriteString(product.ProductURL)
-
-			builder.WriteString("\n\n")
-			builder.WriteString("#humblebundle #humble" + category + "bundle #" + category)
-
-			payload := url.Values{}
-			payload.Add("status", builder.String())
-			payload.Add("visibility", "private")
-			payload.Add("language", "en")
-
-			endpoint := viper.GetString("mastodon.url") + "/api/v1/statuses"
-			token := viper.GetString("mastodon.token")
-			idemkey := uuid.New().String()
-
-			client := &http.Client{}
-			req, err := http.NewRequest("POST", endpoint, bytes.NewBuffer([]byte(payload.Encode())))
+		document.Find("script#landingPage-json-data").Each(func(idx int, s *goquery.Selection) {
+			node := s.Nodes[0]
+			data := node.FirstChild.Data
+			bundles, err := parseBundles([]byte(data), category)
 			if err != nil {
-				log.Panicln(err)
+				log.Error().Str("func", "UpdateBundles").Msg(err.Error())
 			}
 
-			req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-			req.Header.Add("Idempotency-Key", idemkey)
-			req.Header.Add("Authorization", fmt.Sprintf("Bearer %v", token))
-
-			res, err := client.Do(req)
-			if err != nil {
-				fmt.Println(err)
-				return
+			for _, bundle := range bundles {
+				err := handleHumbleBundle(bundle, category)
+				if err != nil {
+					log.Error().Str("bundle", bundle.MachineName).
+						Msgf("Error handling humble bundle: %v", err)
+				}
 			}
-
-			if res.StatusCode != 200 {
-				log.Printf("Error sending Mastodon post: %q\n", res.Status)
-			}
-
-			//sum := sha256.Sum256([]byte(product.ProductURL))
-			//sumstring := hex.EncodeToString(sum[:])
-			log.Printf("%v: %v\n", category, misc.Sanitize(product.MarketingBlurb))
-			time.Sleep(5 * time.Second)
-		}
-
-	})
+		})
+		log.Debug().Str("category", category).Msg("finished bundle update")
+	}
 }
 
 func parseBundles(data []byte, category string) ([]models.Bundle, error) {
@@ -127,4 +94,21 @@ func parseBundles(data []byte, category string) ([]models.Bundle, error) {
 	default:
 		return nil, fmt.Errorf("unknown category %s", category)
 	}
+}
+
+func handleHumbleBundle(bundle models.Bundle, category string) error {
+	isnew, err := db.IsANewBundle(bundle)
+	if err != nil {
+		return err
+	}
+
+	if !isnew {
+		log.Debug().Str("bundle", bundle.MachineName).Msg("bundle already exists")
+		return nil
+	}
+
+	log.Info().Str("bundle", bundle.ProductURL).Msg("found new Bundle")
+
+	err = db.Enqueue(bundle, category)
+	return err
 }

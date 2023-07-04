@@ -14,3 +14,16 @@ mastodon:
   # Access token for your mastodon account
   # see $your_mastodon_url/settings/applications
   token: ""
+
+  # Interval in which humble-bot tries to post bundles
+  # format: "20s" or "15m" or "1h"
+  # default: 5m
+  postinterval: "5m"
+
+# Humble Bundle settings
+humblebundle:
+
+  # Interval in which humble-bot tries to query humblebundle.com
+  # format: "20s" or "15m" or "1h"
+  # default: 30m
+  pollinterval: "30m"

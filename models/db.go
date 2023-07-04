@@ -16,7 +16,7 @@ var DB *bun.DB
 type QueueItem struct {
 	bun.BaseModel `bun:"table:queue"`
 	ID            int64     `bun:"id,pk,autoincrement"`
-	Hash          string    `bun:"hash,notnull"`
+	Name          string    `bun:"name"`
 	Headline      string    `bun:"headline"`
 	Body          string    `bun:"body"`
 	URL           string    `bun:"url"`
@@ -26,7 +26,8 @@ type QueueItem struct {
 
 type SeenBundle struct {
 	bun.BaseModel `bun:"table:seen"`
-	ID            int64  `bun:"id,pk,autoincrement"`
-	NameHash      string `bun:"namehash,notnull"`
-	URLHash       string `bun:"urlhash,notnull"`
+	ID            int64     `bun:"id,pk,autoincrement"`
+	Name          string    `bun:"name,notnull"`
+	URL           string    `bun:"url,notnull"`
+	SeenAt        time.Time `bun:"seenat"`
 }

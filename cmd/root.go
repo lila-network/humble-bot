@@ -8,8 +8,10 @@ package cmd
 
 import (
 	"codeberg.org/lauralani/humble-bot/app"
+	"codeberg.org/lauralani/humble-bot/constants"
 	"codeberg.org/lauralani/humble-bot/db"
-	"log"
+	"codeberg.org/lauralani/humble-bot/log"
+	log2 "log"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -35,23 +37,20 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig, db.Initialize)
-
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
+	cobra.OnInitialize(initConfig, db.Initialize, log.InitializeLogger)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $workingdir/config.yaml)")
+	rootCmd.PersistentFlags().BoolVarP(&log.FlagDebug, "debug", "d", false, "enable debug logging")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
 }
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
 	if cfgFile != "" {
-		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
 	} else {
 
@@ -60,15 +59,15 @@ func initConfig() {
 
 		viper.AddConfigPath(workingdir)
 		viper.SetConfigName("config")
-		//viper.SetConfigType("yaml")
 	}
 
-	viper.AutomaticEnv() // read in environment variables that match
+	viper.SetDefault("mastodon.postinterval", "5m")
+	viper.SetDefault("humblebundle.pollinterval", "30m")
 
-	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
-		log.Printf("Using config file: %v\n", viper.ConfigFileUsed())
+		log2.Printf("Starting humble-bot %v with config file: %v\n", constants.AppVersion, viper.ConfigFileUsed())
 	} else {
-		log.Panicf("Can't find config file: %v\n", viper.ConfigFileUsed())
+		log2.Printf("Can't find config file: %v\n", viper.ConfigFileUsed())
+		os.Exit(1)
 	}
 }

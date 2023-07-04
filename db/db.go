@@ -7,20 +7,26 @@
 package db
 
 import (
+	"codeberg.org/lauralani/humble-bot/misc"
 	"codeberg.org/lauralani/humble-bot/models"
 	"context"
 	"database/sql"
+	"fmt"
+	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
 	"github.com/uptrace/bun/driver/pgdriver"
-	"log"
+	"os"
+	"time"
 )
 
 func Initialize() {
 	dsn := viper.GetString("database.url")
 	if dsn == "" {
-		log.Fatalln("config item database.url is invalid! Aborting...")
+		log.Error().Str("config", viper.ConfigFileUsed()).
+			Str("func", "db.Initialize").Msg("empty config value vor key database.url")
+		os.Exit(1)
 	}
 
 	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dsn)))
@@ -28,12 +34,78 @@ func Initialize() {
 
 	_, err := models.DB.NewCreateTable().IfNotExists().Model((*models.QueueItem)(nil)).Exec(context.Background())
 	if err != nil {
-		log.Panicf("[DB] couldn't create database: %q", err)
+		log.Error().Str("table", "queue").
+			Str("func", "db.Initialize").Msgf("DB Error: CREATE TABLE failed: %q", err)
+		os.Exit(1)
 	}
 
 	_, err = models.DB.NewCreateTable().IfNotExists().Model((*models.SeenBundle)(nil)).Exec(context.Background())
 	if err != nil {
-		log.Panicf("[DB] couldn't create database: %q", err)
+		log.Error().Str("table", "queue").
+			Str("func", "db.Initialize").Msgf("DB Error: CREATE TABLE failed: %q", err)
+		os.Exit(1)
 	}
 
+}
+
+func Enqueue(bundle models.Bundle, category string) error {
+	var item = models.QueueItem{}
+	var seenitem = models.SeenBundle{}
+
+	item.Name = bundle.MachineName
+	item.Headline = bundle.TileName
+	item.Body = misc.Sanitize(bundle.MarketingBlurb)
+	item.URL = "https://www.humblebundle.com" + bundle.ProductURL
+	item.Hashtags = fmt.Sprintf("#humblebundle #humble%sbundle #%s", category, category)
+	item.Created = time.Now()
+
+	seenitem.Name = bundle.MachineName
+	seenitem.URL = bundle.ProductURL
+	seenitem.SeenAt = time.Now()
+
+	log.Debug().Str("bundle", bundle.MachineName).Msg("adding bundle to seen table")
+	_, err := models.DB.NewInsert().Model(&seenitem).Exec(context.Background())
+	if err != nil {
+		log.Debug().Str("func", "db.Enqueue").Str("bundle", bundle.MachineName).
+			Str("table", "seen").Msgf("DB Error: INSERT failed: %v", err)
+		return err
+	}
+
+	_, err = models.DB.NewInsert().Model(&item).Exec(context.Background())
+	if err != nil {
+		log.Debug().Str("func", "db.Enqueue").Str("bundle", bundle.MachineName).
+			Str("table", "queue").Msgf("DB Error: INSERT failed: %v", err)
+		return err
+	}
+
+	log.Debug().Str("bundle", bundle.MachineName).Msg("added bundle to queue")
+	return nil
+}
+
+func Dequeue(item models.QueueItem) error {
+	_, err := models.DB.NewDelete().Model((*models.QueueItem)(nil)).
+		Where("id = ?", item.ID).Exec(context.Background())
+	if err != nil {
+		log.Debug().Str("func", "Dequeue").Str("item", item.Name).
+			Msgf("DB Error: DELETE failed: %v", err)
+		return err
+	}
+	log.Debug().Str("func", "Dequeue").Str("item", item.Name).
+		Msg("dequeued item")
+	return nil
+}
+
+func IsANewBundle(bundle models.Bundle) (bool, error) {
+	count, err := models.DB.NewSelect().Model((*models.SeenBundle)(nil)).Where("name = ?", bundle.MachineName).
+		Where("url = ?", bundle.ProductURL).Count(context.Background())
+	if err != nil {
+		log.Error().Str("bundle", bundle.MachineName).Str("func", "IsANewBundle").
+			Msgf("DB error: %v", err.Error())
+		return false, err
+	}
+
+	if count != 0 {
+		return false, nil
+	}
+	return true, nil
 }
