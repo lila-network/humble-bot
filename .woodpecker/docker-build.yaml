@@ -1,0 +1,30 @@
+steps:
+  docker-deploy-push:
+    when:
+      - event: push
+        branch: main
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      dockerfile: Dockerfile
+      platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
+      repo: codeberg.org/lauralani/
+      registry: codeberg.org
+      tags: latest
+      username: lauralani
+      password:
+        from_secret: FORGEJO_APIKEY
+
+  docker-deploy-tag:
+    when:
+      event:
+        - tag
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      dockerfile: Dockerfile
+      platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
+      repo: codeberg.org/lauralani/humble-bot
+      registry: codeberg.org
+      auto_tag: true
+      username: lauralani
+      password:
+        from_secret: FORGEJO_APIKEY
