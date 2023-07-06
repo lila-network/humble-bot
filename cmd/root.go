@@ -39,7 +39,7 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig, db.Initialize, log.InitializeLogger)
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $workingdir/config.yaml)")
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file (default is $workingdir/config.yaml)")
 	rootCmd.PersistentFlags().BoolVarP(&log.FlagDebug, "debug", "d", false, "enable debug logging")
 
 	// Cobra also supports local flags, which will only run
