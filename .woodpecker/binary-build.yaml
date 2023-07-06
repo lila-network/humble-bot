@@ -1,3 +1,6 @@
+when:
+  event: tag
+
 matrix:
   include:
     - GOOS: linux
@@ -10,8 +13,6 @@ matrix:
 
 steps:
   build:
-    when:
-      event: tag
     secrets:
       - FORGEJO_APIKEY
     image: golang:1.20-alpine
