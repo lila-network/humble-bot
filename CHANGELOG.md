@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - tbd
 
+## [v0.1.1] - 2023-06-07
+
+### Added
+- shortflag for using different config file
+- config option `mastodon.visibility` to set post visibility
+- config validation for `mastodon.visibility`
+- systemd service file in `examples/`
+- `--version` and `-v` cli flags to display the current version
+
+### Removed
+- cli option to generate bash completion file
+
 ## [v0.1.0] - 2023-06-07
 
 ### Added
@@ -16,4 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Postgres as Database and queue
 
 
+
+[unreleased]: https://codeberg.org/lauralani/humble-bot/compare/v0.1.1...HEAD
+[v0.1.1]: https://codeberg.org/lauralani/humble-bot/compare/v0.1.0...v0.1.1
 [v0.1.0]: https://codeberg.org/lauralani/humble-bot/releases/tag/v0.1.0
