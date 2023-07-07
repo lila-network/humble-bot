@@ -16,8 +16,12 @@ import (
 var FlagDebug bool
 
 func InitializeLogger() {
-
-	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout, TimeFormat: time.RFC3339})
+	if os.Getenv("INVOCATION_ID") == "" {
+		// detect systemd
+		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout, TimeFormat: time.RFC3339})
+	} else {
+		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout, NoColor: true, PartsExclude: []string{"time"}})
+	}
 
 	if FlagDebug {
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
