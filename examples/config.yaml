@@ -20,6 +20,11 @@ mastodon:
   # default: 5m
   postinterval: "5m"
 
+  # Interval in which humble-bot tries to post bundles
+  # allowed values: ["public", "unlisted", "private"]
+  # default: public
+  visibility: "public"
+
 # Humble Bundle settings
 humblebundle:
 

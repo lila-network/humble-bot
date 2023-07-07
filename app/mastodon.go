@@ -23,6 +23,7 @@ import (
 func postQueueItemToMastodon(bundle models.QueueItem) error {
 	urlstring := viper.GetString("mastodon.url") + "/api/v1/statuses"
 	endpoint, _ := url.Parse(urlstring)
+	visibility := viper.GetString("mastodon.visibility")
 
 	token := viper.GetString("mastodon.token")
 	idemkey := uuid.New().String()
@@ -42,7 +43,7 @@ func postQueueItemToMastodon(bundle models.QueueItem) error {
 
 	payload := url.Values{}
 	payload.Add("status", builder.String())
-	payload.Add("visibility", "private")
+	payload.Add("visibility", visibility)
 	payload.Add("language", "en")
 
 	client := misc.CustomHttpClient()

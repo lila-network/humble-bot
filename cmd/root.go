@@ -11,6 +11,7 @@ import (
 	"codeberg.org/lauralani/humble-bot/constants"
 	"codeberg.org/lauralani/humble-bot/db"
 	"codeberg.org/lauralani/humble-bot/log"
+	"codeberg.org/lauralani/humble-bot/misc"
 	log2 "log"
 	"os"
 
@@ -37,7 +38,7 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig, db.Initialize, log.InitializeLogger)
+	cobra.OnInitialize(initConfig, db.Initialize, log.InitializeLogger, misc.CheckConfig)
 
 	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file (default is $workingdir/config.yaml)")
 	rootCmd.PersistentFlags().BoolVarP(&log.FlagDebug, "debug", "d", false, "enable debug logging")
@@ -62,6 +63,7 @@ func initConfig() {
 	}
 
 	viper.SetDefault("mastodon.postinterval", "5m")
+	viper.SetDefault("mastodon.visibility", "public")
 	viper.SetDefault("humblebundle.pollinterval", "30m")
 
 	if err := viper.ReadInConfig(); err == nil {
