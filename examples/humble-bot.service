@@ -1,0 +1,11 @@
+[Unit]
+Description=Humble Bot
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/humble-bot daemon --config /etc/humble-bot/config.yaml
+User=humble-bot
+Group=humble-bot
+
+[Install]
+WantedBy=multi-user.target
