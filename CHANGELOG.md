@@ -29,6 +29,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[unreleased]: https://codeberg.org/lauralani/humble-bot/compare/v0.1.1...HEAD
-[v0.1.1]: https://codeberg.org/lauralani/humble-bot/compare/v0.1.0...v0.1.1
-[v0.1.0]: https://codeberg.org/lauralani/humble-bot/releases/tag/v0.1.0
+[unreleased]: https://git.lauka.net/lauralani/humble-bot/compare/v0.1.1...HEAD
+[v0.1.1]: https://git.lauka.net/lauralani/humble-bot/compare/v0.1.0...v0.1.1
+[v0.1.0]: https://git.lauka.net/lauralani/humble-bot/releases/tag/v0.1.0
