@@ -10,6 +10,7 @@ import (
 	"bytes"
 	"codeberg.org/lauralani/humble-bot/misc"
 	"codeberg.org/lauralani/humble-bot/models"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/google/uuid"
@@ -24,6 +25,7 @@ func postQueueItemToMastodon(bundle models.QueueItem) error {
 	urlstring := viper.GetString("mastodon.url") + "/api/v1/statuses"
 	endpoint, _ := url.Parse(urlstring)
 	visibility := viper.GetString("mastodon.visibility")
+	var post models.MastodonPost
 
 	token := viper.GetString("mastodon.token")
 	idemkey := uuid.New().String()
@@ -67,7 +69,25 @@ func postQueueItemToMastodon(bundle models.QueueItem) error {
 		return errors.New("couldn't POST message to Mastodon")
 	}
 
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			log.Error().Str("func", "postQueueItemToMastodon.body.Close()").Msg(err.Error())
+		}
+	}(res.Body)
+
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		log.Error().Str("func", "postQueueItemToMastodon.body.ReadAll()").Msg(err.Error())
+	}
+
+	err = json.Unmarshal(body, &post)
+	if err != nil {
+		log.Error().Str("func", "postQueueItemToMastodon.body.Unmarshal()").
+			Msgf("can't unmarshal body: %q", err)
+	}
+
 	log.Info().
-		Str("url", bundle.URL).Msg("posted new Bundle to Mastodon =)")
+		Str("bundle-url", bundle.URL).Str("post-url", post.URL).Msg("posted new Bundle =)")
 	return nil
 }
