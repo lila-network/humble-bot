@@ -18,7 +18,7 @@ steps:
     image: golang:1.20-alpine
     environment:
       - APP_NAME=humble-bot
-      - FORGE=https://codeberg.org
+      - FORGE=https://git.lauka.net
     commands:
       - apk add --update --no-cache xz curl jq
       - go mod download
