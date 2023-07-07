@@ -42,6 +42,7 @@ func init() {
 
 	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file (default is $workingdir/config.yaml)")
 	rootCmd.PersistentFlags().BoolVarP(&log.FlagDebug, "debug", "d", false, "enable debug logging")
+	rootCmd.CompletionOptions.DisableDefaultCmd = true
 
 	rootCmd.Version = constants.AppVersion
 	// Cobra also supports local flags, which will only run
