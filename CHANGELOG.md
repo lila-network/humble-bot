@@ -6,7 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- tbd
+
+## [v0.1.2] - 2023-06-07
+### Added
+- logging for new mastodon post now also logs the post url
+
+### Fixed
+- example config file description of `mastodon.visibility`
+
+### Changed
+- Logging will not show timestamps when app is started via systemd
 
 ## [v0.1.1] - 2023-06-07
 
@@ -29,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[unreleased]: https://git.lauka.net/lauralani/humble-bot/compare/v0.1.1...HEAD
+[unreleased]: https://git.lauka.net/lauralani/humble-bot/compare/v0.1.2...HEAD
+[v0.1.2]: https://git.lauka.net/lauralani/humble-bot/compare/v0.1.1...v0.1.2
 [v0.1.1]: https://git.lauka.net/lauralani/humble-bot/compare/v0.1.0...v0.1.1
 [v0.1.0]: https://git.lauka.net/lauralani/humble-bot/releases/tag/v0.1.0

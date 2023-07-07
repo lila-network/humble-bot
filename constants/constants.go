@@ -6,7 +6,7 @@
 
 package constants
 
-var AppVersion = "0.1.1"
+var AppVersion = "0.1.2"
 
 var HumbleCategories = []string{"games", "books", "software"}
 
