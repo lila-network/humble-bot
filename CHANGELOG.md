@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.0] - 2023-06-11
 ### Added
 - cli option `queue show` to list currently queued bundles [#2](https://git.lauka.net/lauralani/humble-bot/issues/2)
 - cli option `queue fill` to query humblebundle.com for new bundles and then fill the queue [#2](https://git.lauka.net/lauralani/humble-bot/issues/2)
@@ -46,7 +47,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[unreleased]: https://git.lauka.net/lauralani/humble-bot/compare/v0.1.2...HEAD
+[unreleased]: https://git.lauka.net/lauralani/humble-bot/compare/v0.2.0...HEAD
+[v0.2.0]: https://git.lauka.net/lauralani/humble-bot/compare/v0.1.2...v0.2.0
 [v0.1.2]: https://git.lauka.net/lauralani/humble-bot/compare/v0.1.1...v0.1.2
 [v0.1.1]: https://git.lauka.net/lauralani/humble-bot/compare/v0.1.0...v0.1.1
 [v0.1.0]: https://git.lauka.net/lauralani/humble-bot/releases/tag/v0.1.0
