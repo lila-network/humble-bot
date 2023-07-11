@@ -51,7 +51,7 @@ type MastodonPost struct {
 		FollowersCount int       `json:"followers_count"`
 		FollowingCount int       `json:"following_count"`
 		StatusesCount  int       `json:"statuses_count"`
-		LastStatusAt   time.Time `json:"last_status_at"`
+		LastStatusAt   string    `json:"last_status_at"`
 		Emojis         []any     `json:"emojis,omitempty"`
 		Fields         []struct {
 			Name       string `json:"name"`
