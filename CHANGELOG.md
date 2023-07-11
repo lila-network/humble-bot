@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [v0.2.1] - 2023-06-11
 ### Changed
 - when starting the app in daemon mode, the app will now wait one complete interval until it posts the next post 
 instead of immediately posting one bundle
@@ -55,7 +57,8 @@ instead of immediately posting one bundle
 
 
 
-[unreleased]: https://git.lauka.net/lauralani/humble-bot/compare/v0.2.0...HEAD
+[unreleased]: https://git.lauka.net/lauralani/humble-bot/compare/v0.2.1...HEAD
+[v0.2.1]: https://git.lauka.net/lauralani/humble-bot/compare/v0.2.0...v0.2.1
 [v0.2.0]: https://git.lauka.net/lauralani/humble-bot/compare/v0.1.2...v0.2.0
 [v0.1.2]: https://git.lauka.net/lauralani/humble-bot/compare/v0.1.1...v0.1.2
 [v0.1.1]: https://git.lauka.net/lauralani/humble-bot/compare/v0.1.0...v0.1.1
