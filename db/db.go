@@ -109,3 +109,15 @@ func IsANewBundle(bundle models.Bundle) (bool, error) {
 	}
 	return true, nil
 }
+
+func GetAllQueuedItems() []models.QueueItem {
+	var items []models.QueueItem
+	err := models.DB.NewSelect().Model(&items).Scan(context.Background())
+	if err != nil {
+		log.Error().Str("func", "GetAllQueuedItems").
+			Msgf("DB error: %v", err.Error())
+		os.Exit(1)
+	}
+
+	return items
+}

@@ -14,10 +14,6 @@ import (
 	"time"
 )
 
-func RunRoot(cmd *cobra.Command, args []string) {
-	UpdateBundles()
-}
-
 func RunDaemon(cmd *cobra.Command, args []string) {
 	StartCronJobs()
 }

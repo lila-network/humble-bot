@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- cli option `queue show` to list currently queued bundles [#2](https://git.lauka.net/lauralani/humble-bot/issues/2)
+- cli option `queue fill` to query humblebundle.com for new bundles and then fill the queue [#2](https://git.lauka.net/lauralani/humble-bot/issues/2)
+- cli option `queue remove` to remove a queued up bundle [#2](https://git.lauka.net/lauralani/humble-bot/issues/2)
+
 ### Fixed
 - [[BUG] Error parsing mastodon response field time](https://git.lauka.net/lauralani/humble-bot/issues/1)
 

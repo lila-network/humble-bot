@@ -7,7 +7,6 @@
 package cmd
 
 import (
-	"codeberg.org/lauralani/humble-bot/app"
 	"codeberg.org/lauralani/humble-bot/constants"
 	"codeberg.org/lauralani/humble-bot/db"
 	"codeberg.org/lauralani/humble-bot/log"
@@ -23,9 +22,8 @@ var cfgFile string
 
 var rootCmd = &cobra.Command{
 	Use:   "humble-bot",
-	Short: "A simple daemon posting new Humble Bundles on Mastodon",
+	Short: "A simple CLI app getting and posting new Humble Bundles on Mastodon",
 	Long:  `This app regularly checks for new Humble Bundles and posts updates on Mastodon`,
-	Run:   app.RunRoot,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
