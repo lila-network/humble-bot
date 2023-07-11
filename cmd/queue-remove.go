@@ -17,6 +17,7 @@ var queueremoveCmd = &cobra.Command{
 	Run:     app.RunQueueRemove,
 	Args:    cobra.ExactArgs(1),
 	Example: "humble-bot queue remove 25",
+	Aliases: []string{"delete"},
 }
 
 func init() {

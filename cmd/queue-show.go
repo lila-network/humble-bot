@@ -12,10 +12,11 @@ import (
 
 // queueshowCmd represents the queue command
 var queueshowCmd = &cobra.Command{
-	Use:   "show",
-	Short: "Show items in queue",
-	Run:   app.RunQueueShow,
-	Args:  cobra.ExactArgs(0),
+	Use:     "show",
+	Short:   "Show items in queue",
+	Run:     app.RunQueueShow,
+	Args:    cobra.ExactArgs(0),
+	Aliases: []string{"list"},
 }
 
 func init() {
