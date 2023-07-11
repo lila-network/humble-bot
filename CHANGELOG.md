@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- [[BUG] Error parsing mastodon response field time](https://git.lauka.net/lauralani/humble-bot/issues/1)
+
 ## [v0.1.2] - 2023-06-07
 ### Added
 - logging for new mastodon post now also logs the post url
