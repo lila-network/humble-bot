@@ -28,7 +28,7 @@ func StartCronJobs() {
 		return
 	}
 
-	_, err = s.Every(viper.GetString("mastodon.postinterval")).Do(RunSingleQueueItem)
+	_, err = s.Every(viper.GetString("mastodon.postinterval")).WaitForSchedule().Do(RunSingleQueueItem)
 	if err != nil {
 		log.Error().Str("func", "StartCronJobs").Str("job", "RunSingleQueueItem").
 			Msgf("Scheduler Error: %q", err)
