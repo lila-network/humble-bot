@@ -6,7 +6,9 @@ by https://chaos.social/@lauralani
 
 ## About
 This bot posts new Humble Bundles on the Fediverse so you can follow the bot and get the newest Bundles.
-The Bot can be found at: TBD
+The Bot can be found at https://botsin.space/@humblebundles
+
+Also see https://botwiki.org/bot/humble-bundle-bot/
 
 ## Changelog
 You can find the changelog here: [CHANGELOG](CHANGELOG.md)
