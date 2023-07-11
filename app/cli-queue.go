@@ -25,7 +25,7 @@ func RunQueueShow(cmd *cobra.Command, args []string) {
 	}
 
 	t := table.NewWriter()
-	t.SetStyle(table.StyleLight)
+	t.SetStyle(table.StyleRounded)
 	t.SetOutputMirror(os.Stdout)
 	t.AppendHeader(table.Row{"ID", "Short Name", "URL"})
 
