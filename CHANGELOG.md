@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `list` alias to `queue show`
 - Added `delete` alias to `queue remove`
 
+### Changed
+- Changed table output style
+
 ## [v0.2.1] - 2023-06-11
 ### Changed
 - when starting the app in daemon mode, the app will now wait one complete interval until it posts the next post 
