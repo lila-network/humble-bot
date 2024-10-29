@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: df86e9fb27aa132626c4fd5e5cb1dc6a
+      POSTGRES_USER: humble-bot
+      POSTGRES_DB: humble-bot
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+  go-urlsh:
+    image: adoralaura/humble-bot
+    restart: always
+    ports:
+      - 127.0.0.1:3000:3000
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./config:/etc/humble-bot:ro
+

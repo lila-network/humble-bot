@@ -28,3 +28,4 @@ LABEL maintainer="Adora Laura Kalb <adora@lila.network>"
 
 EXPOSE     8080
 ENTRYPOINT ["/bin/humble-bot"]
+CMD ["daemon", "--config", "/etc/humble-bot/config.yaml"]
