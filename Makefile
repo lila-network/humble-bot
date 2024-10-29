@@ -1,9 +1,14 @@
-BINARY_NAME=humble-bot
-default: build
- 
+# Set the default Go build flags
+#GOFLAGS = -ldflags='-w -s -X cmd.Version=$(VERSION)'
+GOFLAGS = -ldflags='-w -s'
+
+# Build the application
 build:
-	go build -o ${BINARY_NAME} main.go
- 
+	go build $(GOFLAGS) -o bin/humble-bot main.go 
+
+# Clean the build artifacts
 clean:
-	go clean
-	rm ${BINARY_NAME}
+	rm -rf bin
+
+# Set a version for the build
+VERSION := $(shell git describe --tags --always)
