@@ -6,7 +6,7 @@ steps:
     image: woodpeckerci/plugin-docker-buildx
     settings:
       dockerfile: Dockerfile
-      platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
+      platforms: linux/arm64/v8,linux/amd64
       repo: adoralaura/humble-bot
       registry: https://index.docker.io/v1/
       tags: unstable
