@@ -1,4 +1,11 @@
 steps:
+  - name: go-lint
+    image: golangci/golangci-lint
+    commands:
+      - golangci-lint run
+    when:
+      event: ["push", "pull_request", "manual"]
+      
   - name: docker-deploy-push
     depends_on:
       - go-lint
