@@ -7,10 +7,11 @@
 package app
 
 import (
-	"codeberg.org/lauralani/humble-bot/db"
-	"codeberg.org/lauralani/humble-bot/models"
 	"context"
 	"database/sql"
+
+	"codeberg.org/lauralani/humble-bot/db"
+	"codeberg.org/lauralani/humble-bot/models"
 	"github.com/rs/zerolog/log"
 )
 
@@ -35,8 +36,11 @@ func RunSingleQueueItem() {
 
 	err = postQueueItemToMastodon(item)
 	if err != nil {
+		log.Error().Str("bundle-name", item.Name).Int64("bundle-id", item.ID).
+			Str("bundle-url", item.URL).Msg("failed to post new bundle!")
 		return
 	}
+
 	log.Debug().Str("func", "RunSingleQueueItem").Str("item", item.Name).
 		Msg("posted to mastodon")
 
