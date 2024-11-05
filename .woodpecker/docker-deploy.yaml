@@ -1,7 +1,7 @@
 steps:
   - name: docker-deploy-push
     depends_on:
-      - lint
+      - go-lint
     when:
       - event: push
         branch: main
@@ -32,7 +32,7 @@ steps:
   
   - name: docker-deploy-unstable
     depends_on:
-      - lint
+      - go-lint
     when:
       - event: push
         branch: main
