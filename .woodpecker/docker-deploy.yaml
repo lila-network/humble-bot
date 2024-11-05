@@ -1,0 +1,48 @@
+steps:
+  - name: docker-deploy-push
+    depends_on:
+      - lint
+    when:
+      - event: push
+        branch: main
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      dockerfile: Dockerfile
+      platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
+      repo: adoralaura/humble-bot
+      registry: https://index.docker.io/v1/
+      tags: latest
+      username: adoralaura
+      password:
+        from_secret: dockerhub_token
+
+  - name: docker-deploy-tag
+    when:
+      - event: tag
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      dockerfile: Dockerfile
+      platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
+      repo: adoralaura/humble-bot
+      registry: https://index.docker.io/v1/
+      auto_tag: true
+      username: adoralaura
+      password:
+        from_secret: dockerhub_token
+  
+  - name: docker-deploy-unstable
+    depends_on:
+      - lint
+    when:
+      - event: push
+        branch: main
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      dockerfile: Dockerfile
+      platforms: linux/arm64/v8,linux/amd64
+      repo: adoralaura/humble-bot
+      registry: https://index.docker.io/v1/
+      tags: unstable
+      username: adoralaura
+      password:
+        from_secret: dockerhub_token
