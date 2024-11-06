@@ -7,16 +7,17 @@
 package app
 
 import (
+	"encoding/json"
+	"fmt"
+	"io"
+	"net/url"
+
 	"codeberg.org/lauralani/humble-bot/constants"
 	"codeberg.org/lauralani/humble-bot/db"
 	"codeberg.org/lauralani/humble-bot/misc"
 	"codeberg.org/lauralani/humble-bot/models"
-	"encoding/json"
-	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/rs/zerolog/log"
-	"io"
-	"net/url"
 )
 
 func UpdateBundles() {
@@ -63,6 +64,8 @@ func UpdateBundles() {
 						Msgf("Error handling humble bundle: %v", err)
 				}
 			}
+
+			log.Info().Int("bundles", len(bundles)).Msg("finished queueing " + category + " bundles")
 		})
 		log.Debug().Str("category", category).Msg("finished bundle update")
 	}
