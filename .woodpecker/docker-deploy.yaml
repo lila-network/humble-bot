@@ -1,3 +1,11 @@
+variables:
+  - &docker_repo 'adoralaura/humble-bot'
+  - &docker_registry 'https://index.docker.io/v1/'
+  - &docker_username 'adoralaura'
+  - &docker_platforms_testing 'linux/arm64/v8,linux/amd64'
+  - &docker_platforms_release 'linux/arm/v7,linux/arm64/v8,linux/amd64'
+  - &docker_dockerfile 'Dockerfile'
+
 steps:
   - name: go-lint
     image: golangci/golangci-lint
@@ -16,8 +24,8 @@ steps:
 #    settings:
 #      dockerfile: Dockerfile
 #      platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
-#      repo: adoralaura/humble-bot
-#      registry: https://index.docker.io/v1/
+#      repo: docker_repo
+#      registry: *docker_registry
 #      tags: latest
 #      username: adoralaura
 #      password:
@@ -28,12 +36,12 @@ steps:
       - event: tag
     image: woodpeckerci/plugin-docker-buildx
     settings:
-      dockerfile: Dockerfile
-      platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
-      repo: adoralaura/humble-bot
-      registry: https://index.docker.io/v1/
+      dockerfile: *docker_dockerfile
+      platforms: *docker_platforms_release
+      repo: *docker_repo
+      registry: *docker_registry
       auto_tag: true
-      username: adoralaura
+      username: *docker_username
       password:
         from_secret: dockerhub_token
   
@@ -45,11 +53,27 @@ steps:
         branch: main
     image: woodpeckerci/plugin-docker-buildx
     settings:
-      dockerfile: Dockerfile
-      platforms: linux/arm64/v8,linux/amd64
-      repo: adoralaura/humble-bot
-      registry: https://index.docker.io/v1/
+      dockerfile: *docker_dockerfile
+      platforms: *docker_platforms_testing
+      repo: *docker_repo
+      registry: *docker_registry
       tags: unstable
-      username: adoralaura
+      username: *docker_username
+      password:
+        from_secret: dockerhub_token
+
+  - name: docker-deploy-pr
+    depends_on:
+      - go-lint
+    when:
+      - event: pull_request
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      dockerfile: *docker_dockerfile
+      platforms: *docker_platforms_testing
+      repo: *docker_repo
+      registry: *docker_registry
+      tag: pull-${CI_COMMIT_PULL_REQUEST}
+      username: *docker_username
       password:
         from_secret: dockerhub_token
