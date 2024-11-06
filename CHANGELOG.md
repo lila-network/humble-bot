@@ -9,9 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added `list` alias to `queue show`
 - Added `delete` alias to `queue remove`
+- config option to toggle colored output
+- Docker build for armv7, arm64 and amd64
 
 ### Changed
 - Changed table output style
+- various default config values (see examples/config.yaml)
+
+### Fixed
+- missing error handling
 
 ## [v0.2.1] - 2023-06-11
 ### Changed

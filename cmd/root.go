@@ -7,12 +7,13 @@
 package cmd
 
 import (
+	log2 "log"
+	"os"
+
 	"codeberg.org/lauralani/humble-bot/constants"
 	"codeberg.org/lauralani/humble-bot/db"
 	"codeberg.org/lauralani/humble-bot/log"
 	"codeberg.org/lauralani/humble-bot/misc"
-	log2 "log"
-	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -62,9 +63,10 @@ func initConfig() {
 		viper.SetConfigName("config")
 	}
 
-	viper.SetDefault("mastodon.postinterval", "5m")
-	viper.SetDefault("mastodon.visibility", "public")
+	viper.SetDefault("mastodon.postinterval", "1h")
+	viper.SetDefault("mastodon.visibility", "private")
 	viper.SetDefault("humblebundle.pollinterval", "30m")
+	viper.SetDefault("logging.colored_output", false)
 
 	if err := viper.ReadInConfig(); err == nil {
 		log2.Printf("Starting humble-bot %v with config file: %v\n", constants.AppVersion, viper.ConfigFileUsed())
