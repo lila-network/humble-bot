@@ -7,18 +7,19 @@
 package db
 
 import (
-	"codeberg.org/lauralani/humble-bot/misc"
-	"codeberg.org/lauralani/humble-bot/models"
 	"context"
 	"database/sql"
 	"fmt"
+	"os"
+	"time"
+
+	"codeberg.org/lauralani/humble-bot/misc"
+	"codeberg.org/lauralani/humble-bot/models"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
 	"github.com/uptrace/bun/driver/pgdriver"
-	"os"
-	"time"
 )
 
 func Initialize() {
@@ -78,7 +79,7 @@ func Enqueue(bundle models.Bundle, category string) error {
 		return err
 	}
 
-	log.Debug().Str("bundle", bundle.MachineName).Msg("added bundle to queue")
+	log.Info().Str("bundle-name", bundle.MachineName).Msg("added bundle to queue")
 	return nil
 }
 
