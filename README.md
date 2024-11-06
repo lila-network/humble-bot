@@ -1,12 +1,12 @@
 # Humble Bundle Fediverse Bot
-by https://social.lila.network/@lauralani
+by https://tech.lgbt/@adoralaura
 
-[![status-badge](https://ci.codeberg.org/api/badges/12433/status.svg)](https://ci.codeberg.org/repos/12433)
+[![status-badge](https://ci.lila.network/api/badges/27/status.svg)](https://ci.lila.network/repos/27)
 [![Please don't upload to GitHub](https://nogithub.codeberg.page/badge.svg)](https://nogithub.codeberg.page)
 
 ## About
 This bot posts new Humble Bundles on the Fediverse so you can follow the bot and get the newest Bundles.
-The Bot can be found at https://botsin.space/@humblebundles
+The Bot can be found at https://tech.lgbt/@humblebundles
 
 Also see https://botwiki.org/bot/humble-bundle-bot/
 
