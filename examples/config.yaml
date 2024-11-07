@@ -3,31 +3,37 @@ database:
   # PostgreSQL Database-URL
   # Format: postgresql://<user>:<password>@<host>/<database>
   # you can add optional postgres parameters after the database part, e.g. ?sslmode=verify-full
-  url: "postgresql://<user>:<password>@<host>/<database>"
+  # see https://bun.uptrace.dev/postgres/#pgdriver for more database config options
+  url: "postgresql://humblebot:humblebot@db/humblebot?sslmode=disable"
 
 # Mastodon Instance settings
 mastodon:
   # URL of your Mastodon Instance
   # Format: https://mastodon.social (without trailing slash)
-  url: "https://"
+  url: "https:///mastodon.social"
 
   # Access token for your mastodon account
   # see $your_mastodon_url/settings/applications
-  token: ""
+  token: "a-secret-token"
 
   # Interval in which humble-bot tries to post bundles
   # format: "20s" or "15m" or "1h"
-  # default: 5m
-  postinterval: "5m"
+  # default: 1h
+  postinterval: "1h"
 
   # Post visibility of the bundles on mastodon
   # allowed values: ["public", "unlisted", "private"]
-  # default: public
-  visibility: "public"
+  # default: private
+  visibility: "private"
+
+# Humble Bot logging settings
+logging:
+  # enable colored logging
+  # default: false
+  colored_output: false
 
 # Humble Bundle settings
 humblebundle:
-
   # Interval in which humble-bot tries to query humblebundle.com
   # format: "20s" or "15m" or "1h"
   # default: 30m

@@ -7,18 +7,22 @@
 package log
 
 import (
-	"github.com/rs/zerolog"
-	"github.com/rs/zerolog/log"
 	"os"
 	"time"
+
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 )
 
 var FlagDebug bool
 
 func InitializeLogger() {
+	_noColor := !viper.GetBool("logging.colored_output")
+
 	if os.Getenv("INVOCATION_ID") == "" {
 		// detect systemd
-		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout, TimeFormat: time.RFC3339})
+		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout, NoColor: _noColor, TimeFormat: time.RFC3339})
 	} else {
 		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout, NoColor: true, PartsExclude: []string{"time"}})
 	}
