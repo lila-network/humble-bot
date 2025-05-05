@@ -1,3 +1,4 @@
 package glitchtip
 
-func Initialize()
+func Initialize() {
+}
