@@ -1,4 +1,4 @@
-FROM golang:1.23-bullseye AS dev
+FROM docker.io/library/golang:1.24-bullseye AS dev
 
 COPY . /var/app
 WORKDIR /var/app
