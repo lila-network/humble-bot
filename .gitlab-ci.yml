@@ -1,0 +1,77 @@
+stages:
+  - lint
+  - build
+
+variables:
+  BUILDAH_IMAGE: "quay.io/buildah/stable:v1.39.3"
+  BUILDAH_MANIFEST: "$CI_PROJECT_NAME"
+  QUAY_IMAGE: "quay.io/adoralaura/$CI_PROJECT_NAME"
+  UNSTABLE_TAG: "unstable"
+
+lint:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH
+  stage: lint
+  image: docker.io/docker/golangci-lint:1.64.6-go1.24.1
+  script:
+    - golangci-lint run
+
+# build on Merge Request
+build-docker-mergerequest:
+  needs:
+    - lint
+  stage: build
+  interruptible: true
+  rules:
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+  variables:
+    STORAGE_DRIVER: vfs
+  image: $BUILDAH_IMAGE
+  script:
+    - buildah login -u $QUAY_USERNAME -p $QUAY_PASSWORD quay.io
+    - buildah manifest create $BUILDAH_MANIFEST
+    - buildah build --tag "$QUAY_IMAGE:$CI_COMMIT_BRANCH" --manifest $BUILDAH_MANIFEST --arch amd64 .
+    - buildah build --tag "$QUAY_IMAGE:$CI_COMMIT_BRANCH" --manifest $BUILDAH_MANIFEST --arch arm64 .
+    - buildah manifest push --all $BUILDAH_MANIFEST "docker://$QUAY_IMAGE:$CI_COMMIT_BRANCH"
+  tags:
+    - kubernetes
+
+# Only run when main gets commits
+build-docker-unstable:
+  needs:
+    - lint
+  stage: build
+  interruptible: true
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  variables:
+    STORAGE_DRIVER: vfs
+  image: $BUILDAH_IMAGE
+  script:
+    - buildah login -u $QUAY_USERNAME -p $QUAY_PASSWORD quay.io
+    - buildah manifest create $BUILDAH_MANIFEST
+    - buildah build --tag "$QUAY_IMAGE:$UNSTABLE_TAG" --manifest $BUILDAH_MANIFEST --arch amd64 .
+    - buildah build --tag "$QUAY_IMAGE:$UNSTABLE_TAG" --manifest $BUILDAH_MANIFEST --arch arm64 .
+    - buildah manifest push --all $BUILDAH_MANIFEST "docker://$QUAY_IMAGE:$UNSTABLE_TAG"
+  tags:
+    - kubernetes
+
+# Only run on release
+build-docker-release:
+  stage: build
+  rules:
+    - if: '$CI_COMMIT_TAG'
+      when: on_success
+    - when: never
+  variables:
+    STORAGE_DRIVER: vfs
+  image: $BUILDAH_IMAGE
+  script:
+    - buildah login -u $QUAY_USERNAME -p $QUAY_PASSWORD quay.io
+    - buildah manifest create $BUILDAH_MANIFEST
+    - buildah build --tag "$QUAY_IMAGE:$CI_COMMIT_TAG" --manifest $BUILDAH_MANIFEST --arch amd64 .
+    - buildah build --tag "$QUAY_IMAGE:$CI_COMMIT_TAG" --manifest $BUILDAH_MANIFEST --arch arm64 .
+    - buildah manifest push --all $BUILDAH_MANIFEST "docker://$QUAY_IMAGE:$CI_COMMIT_TAG"
