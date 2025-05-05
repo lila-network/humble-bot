@@ -6,8 +6,8 @@ The code of this project is available under the MIT license. See the LICENSE fil
 package cmd
 
 import (
-	"codeberg.org/lauralani/humble-bot/app"
 	"github.com/spf13/cobra"
+	"gitlab.lila.network/adora-kalb/humble-bot/app"
 )
 
 // queueCmd represents the queue command

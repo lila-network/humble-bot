@@ -7,9 +7,10 @@
 package misc
 
 import (
-	"codeberg.org/lauralani/humble-bot/constants"
 	"net/http"
 	"time"
+
+	"gitlab.lila.network/adora-kalb/humble-bot/constants"
 )
 
 func CustomHttpClient() *http.Client {

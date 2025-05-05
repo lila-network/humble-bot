@@ -10,10 +10,10 @@ import (
 	log2 "log"
 	"os"
 
-	"codeberg.org/lauralani/humble-bot/constants"
-	"codeberg.org/lauralani/humble-bot/db"
-	"codeberg.org/lauralani/humble-bot/log"
-	"codeberg.org/lauralani/humble-bot/misc"
+	"gitlab.lila.network/adora-kalb/humble-bot/constants"
+	"gitlab.lila.network/adora-kalb/humble-bot/db"
+	"gitlab.lila.network/adora-kalb/humble-bot/log"
+	"gitlab.lila.network/adora-kalb/humble-bot/misc"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"

@@ -7,8 +7,8 @@
 package cmd
 
 import (
-	"codeberg.org/lauralani/humble-bot/app"
 	"github.com/spf13/cobra"
+	"gitlab.lila.network/adora-kalb/humble-bot/app"
 )
 
 // daemonCmd represents the daemon command

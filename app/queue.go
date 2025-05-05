@@ -10,9 +10,9 @@ import (
 	"context"
 	"database/sql"
 
-	"codeberg.org/lauralani/humble-bot/db"
-	"codeberg.org/lauralani/humble-bot/models"
 	"github.com/rs/zerolog/log"
+	"gitlab.lila.network/adora-kalb/humble-bot/db"
+	"gitlab.lila.network/adora-kalb/humble-bot/models"
 )
 
 func RunSingleQueueItem() {

@@ -1,4 +1,4 @@
-module codeberg.org/lauralani/humble-bot
+module gitlab.lila.network/adora-kalb/humble-bot
 
 go 1.23
 

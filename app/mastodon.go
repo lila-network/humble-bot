@@ -8,17 +8,18 @@ package app
 
 import (
 	"bytes"
-	"codeberg.org/lauralani/humble-bot/misc"
-	"codeberg.org/lauralani/humble-bot/models"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/google/uuid"
-	"github.com/rs/zerolog/log"
-	"github.com/spf13/viper"
 	"io"
 	"net/url"
 	"strings"
+
+	"github.com/google/uuid"
+	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
+	"gitlab.lila.network/adora-kalb/humble-bot/misc"
+	"gitlab.lila.network/adora-kalb/humble-bot/models"
 )
 
 func postQueueItemToMastodon(bundle models.QueueItem) error {

@@ -13,13 +13,13 @@ import (
 	"os"
 	"time"
 
-	"codeberg.org/lauralani/humble-bot/misc"
-	"codeberg.org/lauralani/humble-bot/models"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
 	"github.com/uptrace/bun/driver/pgdriver"
+	"gitlab.lila.network/adora-kalb/humble-bot/misc"
+	"gitlab.lila.network/adora-kalb/humble-bot/models"
 )
 
 func Initialize() {

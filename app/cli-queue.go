@@ -7,14 +7,15 @@
 package app
 
 import (
-	"codeberg.org/lauralani/humble-bot/db"
-	"codeberg.org/lauralani/humble-bot/models"
 	"fmt"
+	"os"
+	"strconv"
+
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
-	"os"
-	"strconv"
+	"gitlab.lila.network/adora-kalb/humble-bot/db"
+	"gitlab.lila.network/adora-kalb/humble-bot/models"
 )
 
 func RunQueueShow(cmd *cobra.Command, args []string) {

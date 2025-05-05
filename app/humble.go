@@ -12,12 +12,12 @@ import (
 	"io"
 	"net/url"
 
-	"codeberg.org/lauralani/humble-bot/constants"
-	"codeberg.org/lauralani/humble-bot/db"
-	"codeberg.org/lauralani/humble-bot/misc"
-	"codeberg.org/lauralani/humble-bot/models"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/rs/zerolog/log"
+	"gitlab.lila.network/adora-kalb/humble-bot/constants"
+	"gitlab.lila.network/adora-kalb/humble-bot/db"
+	"gitlab.lila.network/adora-kalb/humble-bot/misc"
+	"gitlab.lila.network/adora-kalb/humble-bot/models"
 )
 
 func UpdateBundles() {

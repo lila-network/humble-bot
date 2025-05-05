@@ -6,7 +6,7 @@
 
 package main
 
-import "codeberg.org/lauralani/humble-bot/cmd"
+import "gitlab.lila.network/adora-kalb/humble-bot/cmd"
 
 func main() {
 	cmd.Execute()

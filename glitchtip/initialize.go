@@ -1,0 +1,3 @@
+package glitchtip
+
+func Initialize()

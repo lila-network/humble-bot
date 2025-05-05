@@ -10,4 +10,4 @@ var AppVersion string
 
 var HumbleCategories = []string{"games", "books", "software"}
 
-var UserAgent = "humble-bot/" + AppVersion + " https://codeberg.org/lauralani/humble-bot"
+var UserAgent = "humble-bot/" + AppVersion + " https://gitlab.lila.network/adora-kalb/humble-bot"
