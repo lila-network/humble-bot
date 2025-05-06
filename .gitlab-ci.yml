@@ -3,7 +3,6 @@ stages:
   - build
 
 variables:
-  BUILDAH_IMAGE: "quay.io/buildah/stable:v1.39.3"
   BUILDAH_MANIFEST: "$CI_PROJECT_NAME"
   QUAY_IMAGE: "quay.io/adoralaura/$CI_PROJECT_NAME"
   UNSTABLE_TAG: "unstable"
@@ -29,7 +28,7 @@ build-docker-mergerequest:
     - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
   variables:
     STORAGE_DRIVER: vfs
-  image: $BUILDAH_IMAGE
+  image: quay.io/buildah/stable:v1.39.3
   script:
     - buildah login -u $QUAY_USERNAME -p $QUAY_PASSWORD quay.io
     - buildah manifest create $BUILDAH_MANIFEST
@@ -49,7 +48,7 @@ build-docker-unstable:
     - if: $CI_COMMIT_BRANCH == "main"
   variables:
     STORAGE_DRIVER: vfs
-  image: $BUILDAH_IMAGE
+  image: quay.io/buildah/stable:v1.39.3
   script:
     - buildah login -u $QUAY_USERNAME -p $QUAY_PASSWORD quay.io
     - buildah manifest create $BUILDAH_MANIFEST
@@ -68,7 +67,7 @@ build-docker-release:
     - when: never
   variables:
     STORAGE_DRIVER: vfs
-  image: $BUILDAH_IMAGE
+  image: quay.io/buildah/stable:v1.39.3
   script:
     - buildah login -u $QUAY_USERNAME -p $QUAY_PASSWORD quay.io
     - buildah manifest create $BUILDAH_MANIFEST
