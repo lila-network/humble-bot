@@ -38,6 +38,8 @@ github.com/jedib0t/go-pretty/v6 v6.6.1 h1:iJ65Xjb680rHcikRj6DSIbzCex2huitmc7bDtx
 github.com/jedib0t/go-pretty/v6 v6.6.1/go.mod h1:zbn98qrYlh95FIhwwsbIip0LYpwSG8SUOScs+v9/t0E=
 github.com/jedib0t/go-pretty/v6 v6.6.8 h1:JnnzQeRz2bACBobIaa/r+nqjvws4yEhcmaZ4n1QzsEc=
 github.com/jedib0t/go-pretty/v6 v6.6.8/go.mod h1:YwC5CE4fJ1HFUDeivSV1r//AmANFHyqczZk+U6BDALU=
+github.com/jedib0t/go-pretty/v6 v6.7.0 h1:DanoN1RnjXTwDN+B8yqtixXzXqNBCs2Vxo2ARsnrpsY=
+github.com/jedib0t/go-pretty/v6 v6.7.0/go.mod h1:YwC5CE4fJ1HFUDeivSV1r//AmANFHyqczZk+U6BDALU=
 github.com/jinzhu/inflection v1.0.0 h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD/E=
 github.com/jinzhu/inflection v1.0.0/go.mod h1:h+uFLlag+Qp1Va5pdKtLDYj+kHp5pxUVkryuEj+Srlc=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
