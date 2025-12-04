@@ -11,7 +11,7 @@ require (
 	github.com/jedib0t/go-pretty/v6 v6.7.4
 	github.com/microcosm-cc/bluemonday v1.0.27
 	github.com/rs/zerolog v1.33.0
-	github.com/spf13/cobra v1.10.1
+	github.com/spf13/cobra v1.10.2
 	github.com/spf13/viper v1.19.0
 	github.com/uptrace/bun v1.2.5
 	github.com/uptrace/bun/dialect/pgdialect v1.2.5
