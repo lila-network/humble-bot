@@ -8,7 +8,7 @@ require (
 	github.com/PuerkitoBio/goquery v1.11.0
 	github.com/go-co-op/gocron v1.37.0
 	github.com/google/uuid v1.6.0
-	github.com/jedib0t/go-pretty/v6 v6.7.6
+	github.com/jedib0t/go-pretty/v6 v6.7.8
 	github.com/microcosm-cc/bluemonday v1.0.27
 	github.com/rs/zerolog v1.33.0
 	github.com/spf13/cobra v1.10.2
