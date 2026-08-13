@@ -6,6 +6,10 @@ GOFLAGS = -ldflags='-w -s'
 build:
 	go build $(GOFLAGS) -o bin/humble-bot main.go 
 
+# Run tests
+test:
+	go test -v ./...
+
 # Clean the build artifacts
 clean:
 	rm -rf bin
