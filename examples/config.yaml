@@ -38,3 +38,8 @@ humblebundle:
   # format: "20s" or "15m" or "1h"
   # default: 30m
   pollinterval: "30m"
+
+  # Humble bundle website url. You should not need to change this, ever. ^^
+  # format: valid URL
+  # default: https://www.humblebundle.com/
+  url: "https://www.humblebundle.com"

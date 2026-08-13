@@ -50,7 +50,7 @@ func init() {
 
 }
 
-// initConfig reads in config file and ENV variables if set.
+// initConfig reads in the config file and ENV variables if set.
 func initConfig() {
 	if cfgFile != "" {
 		viper.SetConfigFile(cfgFile)
@@ -66,6 +66,7 @@ func initConfig() {
 	viper.SetDefault("mastodon.postinterval", "1h")
 	viper.SetDefault("mastodon.visibility", "private")
 	viper.SetDefault("humblebundle.pollinterval", "30m")
+	viper.SetDefault("humblebundle.url", "https://www.humblebundle.com")
 	viper.SetDefault("logging.colored_output", false)
 
 	if err := viper.ReadInConfig(); err == nil {

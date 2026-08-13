@@ -11,9 +11,11 @@ import (
 	"fmt"
 	"io"
 	"net/url"
+	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 	"gitlab.lila.network/adora-kalb/humble-bot/constants"
 	"gitlab.lila.network/adora-kalb/humble-bot/db"
 	"gitlab.lila.network/adora-kalb/humble-bot/misc"
@@ -23,9 +25,12 @@ import (
 func UpdateBundles() {
 	log.Debug().Str("func", "UpdateBundles").Msg("starting bundle run")
 
+	endpointUrl := strings.TrimSuffix(viper.GetString("humblebundle.url"), "/")
+
 	for _, category := range constants.HumbleCategories {
 		log.Debug().Str("category", category).Msg("starting bundle update")
-		endpoint, _ := url.Parse("https://www.humblebundle.com/" + category)
+
+		endpoint, _ := url.Parse(endpointUrl + "/" + category)
 
 		client := misc.CustomHttpClient()
 		req := misc.CustomHttpRequest()
